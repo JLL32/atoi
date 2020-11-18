@@ -59,6 +59,14 @@ mod tests {
     }
     #[test]
     fn test11() {
+        assert_eq!(atoi("-00013.73"), -13);
+    }
+    #[test]
+    fn test12() {
+        assert_eq!(atoi("+00013.73"), 13);
+    }
+    #[test]
+    fn test13() {
         assert_eq!(atoi("1337leet"), 1337);
     }
 }
