@@ -1,10 +1,26 @@
 use std::i32;
 
 pub fn atoi(s: &str) -> i32 {
+
     if s.trim().is_empty() {
         return 0;
     }
-    match s.split_whitespace().collect::<Vec<_>>()[0].parse::<f64>() {
+
+    let mut s = s.split_whitespace().next().unwrap().chars().peekable();
+    let mut res = String::new();
+    match s.peek().unwrap() {
+        '-' => {res.push('-'); s.next();} 
+        '+' => {s.next();}
+        _ => {false;}
+    }
+    for e in s {
+        if e.is_digit(10) {
+            res.push(e);
+        } else {break;}
+    }
+    match res
+        .parse::<f64>()
+    {
         Ok(val) => match val {
             d if d < (i32::MIN as f64) => i32::MIN,
             d if d > (i32::MAX as f64) => i32::MAX,
@@ -68,5 +84,13 @@ mod tests {
     #[test]
     fn test13() {
         assert_eq!(atoi("1337leet"), 1337);
+    }
+    #[test]
+    fn test14() {
+        assert_eq!(atoi("-42-"), -42);
+    }
+    #[test]
+    fn test15() {
+        assert_eq!(atoi("42-"), 42);
     }
 }
